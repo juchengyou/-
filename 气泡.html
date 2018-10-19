@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box{
+				width: 500px;
+				height: 400px;
+				border: 1px solid red;
+				margin: 50px auto;
+				position: relative;
+			}
+			.bubble{
+				background-image: url(img/blue.png);
+				background-size: contain;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div class="box"></div>
+		<script type="text/javascript">
+			function babble(){
+				
+				this.w=20+Math.random()*30;
+				this.h=this.w;
+				
+				this.x=Math.random()*(500-this.w);
+				this.y=Math.random()*(400-this.h);
+				this.d=Math.random()*Math.PI*2;
+				this.v=Math.random()*4+1;
+				this.oDiv=document.createElement("div");
+				
+				this.init=function(){
+					this.oDiv.className="bubble";
+					this.oDiv.style.width=this.w+"px";
+					this.oDiv.style.height=this.h+"px";
+					this.oDiv.style.top=this.y+"px";					
+					this.oDiv.style.left=this.x+"px";
+					document.querySelector(".box").appendChild(this.oDiv);					
+				}
+				this.setPosition=function(x,y){
+					if (x<=0||y<=0||x>(500-this.w)||y>(400-this.h)) {
+		this.d=(this.d+Math.PI)%(Math.PI*2);				
+					} 
+					this.x=x;
+					this.y=y;
+					this.oDiv.style.top=this.y+"px";					
+					this.oDiv.style.left=this.x+"px";
+				}
+				
+				
+				
+				
+				
+				this.move=function(){
+					var x1=this.x+this.v*Math.cos(this.d);
+					var y1=this.y+this.v*Math.sin(this.d);this.setPosition(x1,y1);
+				}
+				this.init();
+				
+			}
+			
+			var n=20;
+			var arr=[];
+			for (var i=0;i<n;i++) {
+				var b=new babble();
+				arr.push(b);
+			}
+			
+			
+			var t=setInterval(function(){
+				for (var i=0;i<arr.length;i++) {
+					arr[i].move();
+				}
+			},50);
+		</script>
+	</body>
+</html>
